@@ -67,12 +67,12 @@ import { CartService } from '../../carts/services/cart.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductDetailsComponent {
+  @Input()
+  product: Product | undefined = undefined; 
+
   cartService = inject(CartService);
   quantity = 1;
   
-  @Input()
-  product?: Product | undefined = undefined; 
-
   addItem() {
     if (this.product) {
       this.cartService.addItem(this.product, this.quantity);
