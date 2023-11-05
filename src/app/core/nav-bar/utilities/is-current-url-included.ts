@@ -1,10 +1,9 @@
-import { DestroyRef, inject } from "@angular/core";
+import { inject } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
 import { filter, map } from "rxjs";
 
 export const isCurrentUrlIncludedFn = (...excludedRoutes: string[]) => {
   const router = inject(Router);
-  const destroyRef$ = inject(DestroyRef);
 
   return router.events
     .pipe(
