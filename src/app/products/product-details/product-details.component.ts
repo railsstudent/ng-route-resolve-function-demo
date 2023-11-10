@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input, signal } from '@angular/core';
 import { Product } from '../product.interface';
 import { TitleCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -13,33 +13,33 @@ import { CartService } from '../../carts/services/cart.service';
       @if (product) {
         <div class="product">
         <div class="row">
-            <img [src]="product?.image" [attr.alt]="product?.title || 'product image'"
+            <img [src]="product.image" [attr.alt]="product.title || 'product image'"
               width="200" height="200"
             />
           </div>
           <div class="row">
             <span>id:</span>
-            <span>{{ product?.id || '' }}</span>
+            <span>{{ product.id }}</span>
           </div>
           <div class="row">
             <span>Category: </span>
-            <span>{{ (product?.category || '') | titlecase }}</span>
+            <span>{{ product.category | titlecase }}</span>
           </div>
           <div class="row">
             <span>Description: </span>
-            <span>{{ product?.description || '' }}</span>
+            <span>{{ product.description }}</span>
           </div>
           <div class="row">
             <span>Price: </span>
-            <span>{{ product?.price || '' }}</span>
+            <span>{{ product.price }}</span>
           </div> 
         </div>
         <div class="buttons">
-          <input type="number" class="order" min="1" [(ngModel)]="quantity" />
+          <input type="number" class="order" min="1" [ngModel]="quantity()" (ngModelChange)="quantity.set($event)" />
           <button (click)="addItem()">Add</button>
         </div>
       } @else {
-        <p>Product does not exist</p>
+        <p>Product is invalid</p>
       }
     </div>
   `,
@@ -75,11 +75,11 @@ export class ProductDetailsComponent {
   product: Product | undefined = undefined; 
 
   cartService = inject(CartService);
-  quantity = 1;
+  quantity = signal(1);
   
   addItem() {
     if (this.product) {
-      this.cartService.addItem(this.product, this.quantity);
+      this.cartService.addItem(this.product, this.quantity());
     }
   }
 }
