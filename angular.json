@@ -65,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ng-route-resolve-function-demo:build:production"
+              "buildTarget": "ng-route-resolve-function-demo:build:production"
             },
             "development": {
-              "browserTarget": "ng-route-resolve-function-demo:build:development"
+              "buildTarget": "ng-route-resolve-function-demo:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -76,7 +76,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ng-route-resolve-function-demo:build"
+            "buildTarget": "ng-route-resolve-function-demo:build"
           }
         },
         "test": {
