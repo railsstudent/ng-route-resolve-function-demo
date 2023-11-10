@@ -10,33 +10,37 @@ import { CartService } from '../../carts/services/cart.service';
   imports: [TitleCasePipe, FormsModule],
   template: `
     <div>
-      <div class="product">
-       <div class="row">
-          <img [src]="product?.image" [attr.alt]="product?.title || 'product image'"
-            width="200" height="200"
-           />
-        </div>
+      @if (product) {
+        <div class="product">
         <div class="row">
-          <span>id:</span>
-          <span>{{ product?.id || '' }}</span>
+            <img [src]="product?.image" [attr.alt]="product?.title || 'product image'"
+              width="200" height="200"
+            />
+          </div>
+          <div class="row">
+            <span>id:</span>
+            <span>{{ product?.id || '' }}</span>
+          </div>
+          <div class="row">
+            <span>Category: </span>
+            <span>{{ (product?.category || '') | titlecase }}</span>
+          </div>
+          <div class="row">
+            <span>Description: </span>
+            <span>{{ product?.description || '' }}</span>
+          </div>
+          <div class="row">
+            <span>Price: </span>
+            <span>{{ product?.price || '' }}</span>
+          </div> 
         </div>
-        <div class="row">
-          <span>Category: </span>
-          <span>{{ (product?.category || '') | titlecase }}</span>
+        <div class="buttons">
+          <input type="number" class="order" min="1" [(ngModel)]="quantity" />
+          <button (click)="addItem()">Add</button>
         </div>
-        <div class="row">
-          <span>Description: </span>
-          <span>{{ product?.description || '' }}</span>
-        </div>
-        <div class="row">
-          <span>Price: </span>
-          <span>{{ product?.price || '' }}</span>
-        </div> 
-      </div>
-      <div class="buttons">
-        <input type="number" class="order" min="1" [(ngModel)]="quantity" />
-        <button (click)="addItem()">Add</button>
-      </div>
+      } @else {
+        <p>Product does not exist</p>
+      }
     </div>
   `,
   styles: [`
